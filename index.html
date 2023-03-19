@@ -75,7 +75,7 @@
                 var amountInt = Number(amount);
                 await firestore.runTransaction(async(transaction) => {
                     await transaction.update(account, {
-                      'balance': currentBalance - amount,
+                      'balance': currentBalance - amountInt,
                     });
                   }).then(() => {
                     alert('Tarik tunai berhasil');
@@ -122,7 +122,7 @@
 
                 await firestore.runTransaction(async(transaction) => {
                     await transaction.update(account, {
-                      'balance': currentBalance + amount,
+                      'balance': currentBalance + amountInt,
                     });
                   }).then(() => {
                     alert('Setor tunai berhasil');

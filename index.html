@@ -1,163 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Firestore</title>
-</head>
-<body>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-        const firebaseConfig = {
-          apiKey: "AIzaSyA8SJvwFGzd46g71AX2tv2luNrU5JfVr64",
-          authDomain: "test2-f2e28.firebaseapp.com",
-          projectId: "test2-f2e28",
-          storageBucket: "test2-f2e28.appspot.com",
-          messagingSenderId: "910337455675",
-          appId: "1:910337455675:web:6185a8a3226da4e86a8e1e"
-        };
-      
-        const app = firebase.initializeApp(firebaseConfig);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/64d58efce2.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="Sign.css" />
+    <title>Sign in & Sign up Form</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="forms-container">
+        <div class="signin-signup">
+          <form id="login" action="#" class="sign-in-form">
+            <h2 class="title">Sign in</h2>
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              <input type="text" placeholder="Username" id="sign-in-username" /> <!--PENTINGG-->
+            </div>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              <input type="password" placeholder="Password" id="sign-in-password" /> <!--PENTINGG-->
+            </div>
+            <input type="submit" id="sign-in-btn" value="Login" class="btn solid" /> <!--PENTINGG-->
+          </form>
+          <form id="coba" action="#" class="sign-up-form">
+            <h2 class="title">Sign up</h2> <!-- INI AKUN SUDAH ADA -->
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              <input id="sign-up-username" type="text" placeholder="Username" /> <!--PENTINGG-->
+            </div>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              <input id="sign-up-password" type="password" placeholder="Password" /> <!--PENTINGG-->
+            </div>
+            <!--<div class="input-field">
+              <i class="fas fa-envelope"></i>
+              <input id="Balance" type="number" placeholder="Balance" /> 
+            </div>-->
+            <input id="sign-up-btn" type="submit" class="btn" value="Sign up" />
+            <!--<input type="button" value="Capacity Chart" onclick="CapacityChart();">-->
+            <!--<button id="saveButton" onclick="storeData()"> Sign Up</button>-->
+          </form> 
+        </div>
+      </div>
 
-        const firestore = firebase.firestore();
-
-        var loop = true;
-
-        // program utama
-        while (loop) {
-          var menu = prompt('=====Selamat Datang di ATM=====\n1. Buat akun\n2. Masuk ke akun\n3. Keluar');
-
-          if (menu == 1) {
-            // buat akun
-            var name = prompt('Masukkan nama');
-            var password = prompt('Masukkan password');
-            
-            var avail = await firestore.collection('user').doc(name).get();
-            
-            if (avail.exists) {
-              // akun sudah ada, gagal membuat akun
-              alert(`Akun dengan nama ${name} sudah ada. Gagal membuat akun`)
-            } else {
-              // create new account
-              await firestore.collection('user').doc(name).set({
-                // 'noRek': noRek,
-                'name': name,
-                'password': password,
-                'balance': 500000
-              });
-              
-              alert('akun berhasil dibuat')
-
-            }
-          }
-          // masuk ke akun
-          else if (menu == 2) {
-            var nameInput = prompt('Masukkan nama');
-            var passwordInput = prompt('Masukkan password');
-
-            var account = firestore.collection('user').doc(nameInput);
-            var accountGet = await account.get();
-            var loginSuccess = !accountGet.exists ? false : passwordInput != accountGet.data()['password'] ? false : true
-            
-            
-            // cek apakah akun exist, jika akun exist cek apakah password yang dimasukkan sudah tepat
-            if (!loginSuccess) {
-              alert('Akun tidak ditemukan atau nama dan/atau password salah')
-            } else {
-              var name = accountGet.data()['name']
-              var password = accountGet.data()['password']
-              var currentBalance = accountGet.data()['balance']
-              var act = prompt(`Selamat datang, ${name}\n1. Tarik tunai\n2. Transfer\n3. Setor tunai\n4. Cek saldo\n5. Keluar`)
-
-              // tarik tunai
-              if (act == 1) {
-                var amount = prompt('Masukkan jumlah tarik tunai');
-                var amountInt = Number(amount);
-                await firestore.runTransaction(async(transaction) => {
-                    await transaction.update(account, {
-                      'balance': currentBalance - amountInt,
-                    });
-                  }).then(() => {
-                    alert('Tarik tunai berhasil');
-                  }).catch((error) => {
-                    alert('Terjadi error. Tarik tunai gagal');
-                  });
-
-              }
-              // transfer
-              else if (act == 2) {
-                var destination = prompt('Masukkan akun tujuan');
-                var amount = prompt('Masukkan jumlah transfer');
-                var amountInt = Number(amount);
-
-                // cek apakah akun tujuan ada atau tidak
-                var destAccount = firestore.collection('user').doc(destination);
-                var destAccountGet = await destAccount.get();
-                if (!destAccountGet.exists) {
-                  alert(`Akun dengan nama ${destination} tidak ditemukan.`);
-                }
-                // akun ditemukan
-                else {
-                  // transaksi transfer
-                  await firestore.runTransaction(async(transaction) => {
-                    await transaction.update(destAccount, {
-                      'balance': destAccountGet.data()['balance'] + amountInt,
-                    });
-
-                    await transaction.update(account, {
-                      'balance': currentBalance - amountInt,
-                    });
-                  }).then(() => {
-                    alert('Transfer berhasil');
-                  }).catch((error) => {
-                    alert('Terjadi error. Transfer gagal');
-                  });
-
-                }
-              }
-              // setor tunai
-              else if (act == 3) {
-                var amount = prompt('Masukkan jumlah setor tunai');
-                var amountInt = Number(amount);
-
-                await firestore.runTransaction(async(transaction) => {
-                    await transaction.update(account, {
-                      'balance': currentBalance + amountInt,
-                    });
-                  }).then(() => {
-                    alert('Setor tunai berhasil');
-                  }).catch((error) => {
-                    alert('Terjadi error. Setor tunai gagal');
-                  });
-              }
-              // cek saldo
-              else if (act == 4) {
-                alert(`sisa saldo: Rp${currentBalance}`)
-              } else if (act == 5) {
-                alert('Keluar dari akun')
-              } else {
-                alert('Menu yang dipilih tidak valid')
-              }
-            }
-
-          }
-          // keluar dari program
-           else if (menu == 3) {
-            break;
-          } else {
-            alert('Menu yang dipilih tidak valid')
-          }
-        }
-
-        
-      </script>
-      <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-</body>
+      <div class="panels-container">
+        <div class="panel left-panel">
+          <div class="content">
+            <h3>Belum punya akun?</h3>
+            <p>
+              Bikin sekarang! Lakukan transaksi yang begitu mudah
+              dengan platform kami
+            </p>
+            <button class="btn transparent" id="go-to-sign-up-btn">
+              Sign up
+            </button>
+          </div>
+          <!--<img src="img/log.svg" class="image" alt="" />-->
+        </div>
+        <div class="panel right-panel">
+          <div class="content">
+            <h3>Sudah punya akun?</h3>
+            <p>
+              Masuk dengan akun Anda, akses beragam fitur transaksi dengan
+              pengguna lain
+            </p>
+            <button class="btn transparent" id="go-to-sign-in-btn">
+              Sign in
+            </button>
+          </div>
+         <!--<img src="img/register.svg" class="image" alt="" />--> 
+        </div>
+      </div>
+    </div>
+    <!-- <script type="module" src="firebase.js"></script> -->
+    <script type="module" src="script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  </body>
 </html>
-
-
-
-
-

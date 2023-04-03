@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>ATM DIGITAL</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="nav">
+        <!-- Logo -->
+      <div class="logo">
+        <h1>BANK CENTRAL INDONESIA</h1>
+      </div>
+      <!-- Navigation Links -->
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#" class="logout">Log Out</a>
+      </div>
+    </nav>
+
+    <!-- Tagline Section -->
+    <section class="tagline">
+      <div class="overlay">
+        <div class="container">
+            <div class="content">
+                <!-- Tagline -->
+              <div class="tagline-text">
+                <h2>Ini ATM</h2>
+                <p>Simpan Uangmu Di Sini Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia maiores rerum minima mollitia, eveniet facere fuga, voluptatem illum, earum placeat eaque cum soluta suscipit provident. Molestiae blanditiis deleniti nihil tempore.</p>
+              </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Menu ATM-->
+    <section class="menu">
+        
+        <!-- Informasi Saldo -->
+        <div class="saldo">
+            <div class="saldo-content">
+              <h2>Informasi Saldo</h2>
+              <h3>Saldo Anda</h3>
+              <p id="currentBalance">Rp 1.000.000</p>
+            </div>
+        </div>
+
+      <div class="container">
+         <!-- Menu 1: Tarik Tunai -->
+         <div class="menu-content">
+            <div class="menu-item">
+              <h3>Tarik Tunai</h3>
+              <form>
+                <div class="form-group">
+                  <label for="amount">Jumlah Tarik Tunai</label>
+                  <input type="number" class="form-control" id="amount" placeholder="Masukkan Jumlah Penarikan">
+                </div>
+                <button type="submit" class="btn btn-primary">Tarik</button>
+              </form>
+            </div>
+          <div>
+          
+          <!-- Menu 2: Transfer -->
+          <div class="menu-content">
+            <div class="menu-item">
+                <h3>Transfer</h3>
+                <form>
+                  <div class="form-group">
+                    <label for="destAccount">Nama Akun Tujuan</label>
+                    <input type="text" class="form-control" id="destAccount" placeholder="Masukkan Mama Akun Tujuan">
+                  </div>
+                  <div class="form-group">
+                    <label for="amount">Jumlah Transfer</label>
+                    <input type="number" class="form-control" id="amount" placeholder="Masukkan Jumlah Transfer">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Transfer</button>
+                </form>
+            </div>
+          </div>
+          
+          <!-- Menu 3: Setor Tunai -->
+          <div class="menu-content">
+            <div class="menu-item">
+                <h3>Setor Tunai</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="amount">Jumlah Setor Tunai</label>
+                        <input type="number" class="form-control" id="amount" placeholder="Masukkan Jumlah Setor Tunai">
+                    </div>
+                        <button type="submit" class="btn btn-primary">Setor</button>
+                </form>
+            </div>
+          </div>
+
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+          <h2>About Us</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non arcu ligula. Curabitur aliquam malesuada orci eu vestibulum. Fusce vel enim euismod, aliquam augue vitae, ullamcorper odio. Quisque commodo tellus vel laoreet faucibus. Suspendisse ornare, quam eu finibus porttitor, odio turpis elementum nulla, et feugiat lacus ipsum quis nisi.</p>
+        </div>
+      </section>
+      
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p>lorem<br>
+               lorem<br>
+               lorem<br>
+               lorem</p>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2023 ATM Digital. All Rights Reserved.</p>
+    </footer>
+
+  </body>
+</html>

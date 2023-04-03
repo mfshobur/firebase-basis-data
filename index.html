@@ -24,6 +24,7 @@
 
         var loop = true;
 
+        // program utama
         while (loop) {
           var menu = prompt('=====Selamat Datang di ATM=====\n1. Buat akun\n2. Masuk ke akun\n3. Keluar');
 
@@ -105,7 +106,7 @@
                     });
 
                     await transaction.update(account, {
-                      'balance': currentBalance - amount,
+                      'balance': currentBalance - amountInt,
                     });
                   }).then(() => {
                     alert('Transfer berhasil');

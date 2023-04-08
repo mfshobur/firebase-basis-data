@@ -1,17 +1,17 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-        const firebaseConfig = {
-          apiKey: "AIzaSyA8SJvwFGzd46g71AX2tv2luNrU5JfVr64",
-          authDomain: "test2-f2e28.firebaseapp.com",
-          projectId: "test2-f2e28",
-          storageBucket: "test2-f2e28.appspot.com",
-          messagingSenderId: "910337455675",
-          appId: "1:910337455675:web:6185a8a3226da4e86a8e1e"
-        };
-      
-        const app = firebase.initializeApp(firebaseConfig);
+const firebaseConfig = {
+  apiKey: "AIzaSyA8SJvwFGzd46g71AX2tv2luNrU5JfVr64",
+  authDomain: "test2-f2e28.firebaseapp.com",
+  projectId: "test2-f2e28",
+  storageBucket: "test2-f2e28.appspot.com",
+  messagingSenderId: "910337455675",
+  appId: "1:910337455675:web:6185a8a3226da4e86a8e1e"
+};
 
-        const firestore = firebase.firestore();
+const app = firebase.initializeApp(firebaseConfig);
+const firestore = firebase.firestore();
 
+// UNTUK FILE INDEX.HTML
 const go_to_sign_in_btn = document.querySelector("#go-to-sign-in-btn");
 const go_to_sign_up_btn = document.querySelector("#go-to-sign-up-btn");
 const container = document.querySelector(".container");
@@ -29,41 +29,64 @@ go_to_sign_in_btn.addEventListener("click", () => {
 });
 
 // sign in
-sign_in_btn.addEventListener("click", async ()  => {
+
+document.getElementById('sign-in-form').addEventListener("submit", async (e) => {
+  e.preventDefault();
   const sign_in_username = document.getElementById('sign-in-username').value;
   const sign_in_password = document.getElementById('sign-in-password').value;
-  var account = firestore.collection('user').doc(sign_in_username);
-  var accountGet = await account.get();
+  var userData = firestore.collection('user').doc(sign_in_username);
+  var userDataGet = await userData.get();
   // alert(accountGet.data()['password']);
-  var loginSuccess = !accountGet.exists ? false : sign_in_password != accountGet.data()['password'] ? false : true
+  var loginSuccess = !userDataGet.exists ? false : sign_in_password != userDataGet.data()['password'] ? false : true
   if (!loginSuccess) {
     alert('Akun tidak ditemukan atau nama dan/atau password salah')
   } else {
-    var name = accountGet.data()['name']
-    var password = accountGet.data()['password']
-    var currentBalance = accountGet.data()['balance']
-    window.location.href = "atm.html";
+    // var accountGet = await account.get();
+    var account = firestore.collection('account').doc(userDataGet.data()['accNumber']);
+    var accountGet = await account.get();
+    var name = accountGet.data()['name'];
+    var accNum = accountGet.data()['accNumber'];
+    var currentBalance = accountGet.data()['balance'];
+    
+    window.location.href = "atm.html?name="+btoa(name)+"&currentBalance="+btoa(currentBalance)+"&accNum="+btoa(accNum);
+    // const name_display = document.getElementById('name-display');
+    // name_display.innerText = name;
+    // const balance_display = document.getElementById('balance-display');
+    // balance_display.innerText = currentBalance;
   }
 });
 
 // sign up
-sign_up_btn.addEventListener("click", async () => {
-  const username = document.getElementById('sign-up-username').value;
-  const password = document.getElementById('sign-up-password').value;
+document.getElementById('sign-up-form').addEventListener("submit", async (e) => {
+  e.preventDefault();
+  var username = document.getElementById('sign-up-username').value;
+  var password = document.getElementById('sign-up-password').value;
   var avail = await firestore.collection('user').doc(username).get();
             
   if (avail.exists) {
     // akun sudah ada, gagal membuat akun
-    alert(`Akun dengan nama ${sign_up_username} sudah ada. Gagal membuat akun`)
+    alert(`Akun dengan nama ${username} sudah ada. Gagal membuat akun`)
   } else {
-    // create new account
+    // nomor rekening user
+    var newAccNum = Math.floor(Math.random() * 100);
+    var accNumber = `1003${newAccNum}`;
+    // membuat data baru di database akun
+    await firestore.collection('account').doc(accNumber).set({
+      'accNumber': accNumber,
+      'name': username,
+      'balance': 500000,
+    });
+
+    // membuat data baru di database user
     await firestore.collection('user').doc(username).set({
-      'noRek': `1003${Math.floor(Math.random() * 100)}`,
       'name': username,
       'password': password,
-      'balance': 500000
+      'accNumber': accNumber,
     });
+
     
-    alert('akun berhasil dibuat');
+    alert(`Akun berhasil dibuat. Silakan sign in dengan akun yang telah dibuat\nNama: ${username}\nNomor Rekening: ${accNumber}`);
+    username = '';
+    password = '';
   }
 });

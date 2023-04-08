@@ -1,127 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>ATM DIGITAL</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script
+      src="https://kit.fontawesome.com/64d58efce2.js"
+      crossorigin="anonymous"
+    ></script>
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="style.css">
+	<title>Firebase Bank</title>
+</head>
+<body>
+	
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand"><i class='bx bxl-firebase icon'></i> Firebase Bank</a>
+		<ul class="side-menu">
+			<li><a href="#" class="active"><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+			<li class="divider" data-text="features">Main</li>
 
-  <body>
-    <!-- Navigation Bar -->
-    <nav class="nav">
-        <!-- Logo -->
-      <div class="logo">
-        <h1>BANK CENTRAL INDONESIA</h1>
-      </div>
-      <!-- Navigation Links -->
-      <div class="links">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a href="#" class="logout">Log Out</a>
-      </div>
-    </nav>
+			
+			<li><a href="#"><i class='bx bx-dollar icon'></i> Balance</a></li>
+            <li><a href="#"><i class='bx bx-money icon'></i> Withdraw</a></li>
+			<li><a href="#"><i class='bx bx-transfer icon' ></i> Transfer</a></li>
+            <li><a href="#"><i class='bx bxs-chart icon' ></i> Deposit</a></li>
 
-    <!-- Tagline Section -->
-    <section class="tagline">
-      <div class="overlay">
-        <div class="container">
-            <div class="content">
-                <!-- Tagline -->
-              <div class="tagline-text">
-                <h2>Ini ATM</h2>
-                <p>Simpan Uangmu Di Sini Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia maiores rerum minima mollitia, eveniet facere fuga, voluptatem illum, earum placeat eaque cum soluta suscipit provident. Molestiae blanditiis deleniti nihil tempore.</p>
-              </div>
-            </div>
-        </div>
-      </div>
-    </section>
+		</ul>
+		<div class="ads">
+            <a href="#" class="btn-sign-out">Sign out</a>
+		</div>
+	</section>
+	<!-- SIDEBAR -->
 
-    <!-- Section Menu ATM-->
-    <section class="menu">
-        
-        <!-- Informasi Saldo -->
-        <div class="saldo">
-            <div class="saldo-content">
-              <h2>Informasi Saldo</h2>
-              <h3>Saldo Anda</h3>
-              <p id="currentBalance">Rp 1.000.000</p>
-            </div>
-        </div>
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu toggle-sidebar' ></i>
+			<form action="#">
+				<div class="form-group">
+					<input type="text" placeholder="Search...">
+					<i class='bx bx-search icon' ></i>
+				</div>
+			</form>
+		</nav>
+		<!-- NAVBAR -->
 
-      <div class="container">
-         <!-- Menu 1: Tarik Tunai -->
-         <div class="menu-content">
-            <div class="menu-item">
-              <h3>Tarik Tunai</h3>
-              <form>
-                <div class="form-group">
-                  <label for="amount">Jumlah Tarik Tunai</label>
-                  <input type="number" class="form-control" id="amount" placeholder="Masukkan Jumlah Penarikan">
-                </div>
-                <button type="submit" class="btn btn-primary">Tarik</button>
-              </form>
-            </div>
-          <div>
-          
-          <!-- Menu 2: Transfer -->
-          <div class="menu-content">
-            <div class="menu-item">
-                <h3>Transfer</h3>
-                <form>
-                  <div class="form-group">
-                    <label for="destAccount">Nama Akun Tujuan</label>
-                    <input type="text" class="form-control" id="destAccount" placeholder="Masukkan Mama Akun Tujuan">
-                  </div>
-                  <div class="form-group">
-                    <label for="amount">Jumlah Transfer</label>
-                    <input type="number" class="form-control" id="amount" placeholder="Masukkan Jumlah Transfer">
-                  </div>
-                  <button type="submit" class="btn btn-primary">Transfer</button>
-                </form>
-            </div>
-          </div>
-          
-          <!-- Menu 3: Setor Tunai -->
-          <div class="menu-content">
-            <div class="menu-item">
-                <h3>Setor Tunai</h3>
-                <form>
-                    <div class="form-group">
-                        <label for="amount">Jumlah Setor Tunai</label>
-                        <input type="number" class="form-control" id="amount" placeholder="Masukkan Jumlah Setor Tunai">
+		<!-- MAIN -->
+		<main>
+			<h1 class="title" id="name-display">Dashboard</h1>
+			<div class="info-data">
+				<div class="balance-card">
+					<div class="head">
+						<div>
+							<h4>Balance</h4>
+							<h2 id="balance-display">IDR 500,000</h2>
+						</div>
+					</div>
+				</div>
+				<!-- WITHDRAW -->
+                <div class="card">
+                    <div class="head">
+						<div>
+							<h4>Withdraw</h4>
+						</div>
+					</div>
+                    <div class="user-input">
+                        <form id="withdraw-form" action="#" class="input-form">
+                            <div class="input-field">
+                              <input type="number" placeholder="Type Amount" id="withdraw-amount-input" /> <!--PENTINGG-->
+                            </div>
+                            <!-- <div class="input-field">
+                              <input type="text" placeholder="Account Number" id="withdraw-account-input" /> PENTINGG
+                            </div> -->
+                            <div class="confirm-button">
+                                <input type="submit" id="withdraw-confirm-button" value="Submit" class="btn solid" /> <!--PENTINGG-->
+                            </div>
+                        </form>
                     </div>
-                        <button type="submit" class="btn btn-primary">Setor</button>
-                </form>
-            </div>
-          </div>
+				</div>
+				<!-- TRANSFER -->
+				<div class="card">
+					<div class="head">
+						<div>
+							<h4>Transfer</h4>
+						</div>
+					</div>
+					<div class="user-input">
+                        <form id="transfer-form" action="#" class="input-form">
+                            <div class="input-field">
+                              <input type="number" placeholder="Amount" id="transfer-amount-input" /> 
+                            </div>
+                            <div class="input-field">
+                              <input type="text" placeholder="Account Receiver Number" id="transfer-account-input" /> 
+                            </div>
+                            <div class="confirm-button">
+                                <input type="submit" id="transfer-confirm-button" value="Submit" class="btn solid" /> 
+                            </div>
+                        </form>
+                    </div>
+				</div>
+				<!-- DEPOSIT -->
+				<div class="card">
+					<div class="head">
+						<div>
+							<h4>Deposit</h4>
+						</div>
+					</div>
+					<div class="user-input">
+                        <form id="deposit-form" action="#" class="input-form">
+                            <div class="input-field">
+                              <input type="number" placeholder="Type Amount" id="deposit-amount-input" /> 
+                            </div>
+                            <!-- <div class="input-field">
+                              <input type="text" placeholder="Account Number" id="deposit-account-input" /> 
+                            </div> -->
+                            <div class="confirm-button">
+                                <input type="submit" id="deposit-confirm-button" value="Submit" class="btn solid" /> 
+                            </div>
+                        </form>
+                    </div>
+				</div>
+			</div>
+		<!-- MAIN -->
+	</section>
+	<!-- NAVBAR -->
 
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-          <h2>About Us</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non arcu ligula. Curabitur aliquam malesuada orci eu vestibulum. Fusce vel enim euismod, aliquam augue vitae, ullamcorper odio. Quisque commodo tellus vel laoreet faucibus. Suspendisse ornare, quam eu finibus porttitor, odio turpis elementum nulla, et feugiat lacus ipsum quis nisi.</p>
-        </div>
-      </section>
-      
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <h2>Contact Us</h2>
-            <p>lorem<br>
-               lorem<br>
-               lorem<br>
-               lorem</p>
-        </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2023 ATM Digital. All Rights Reserved.</p>
-    </footer>
-
-  </body>
+	<!-- <script type="module" src="script.js"></script> -->
+	<script type="module" src="javascript.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+</body>
 </html>

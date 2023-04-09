@@ -31,9 +31,9 @@ document.getElementById('withdraw-form').addEventListener("submit", async (e) =>
 	e.preventDefault();
 	var amount = document.getElementById('withdraw-amount-input').value;
 	var amountInt = Number(amount);
-	var  currentBalanceInt = Number(currentBalance);
+	var currentBalanceInt = Number(currentBalance);
 	// check if current balance is enough to withdraw
-	if (amountInt < currentBalanceInt) {
+	if (amountInt < currentBalanceInt && amountInt > 0) {
 		await firestore.runTransaction(async(transaction) => {
 			await transaction.update(account, {
 				'balance': currentBalance - amountInt,
@@ -63,7 +63,7 @@ document.getElementById('transfer-form').addEventListener("submit", async (e) =>
 	var currentBalanceInt = Number(currentBalance);
 
 	// check if current balance is enough to withdraw
-	if (amountInt < currentBalanceInt) {
+	if (amountInt < currentBalanceInt && amountInt > 0) {
 		// check if destination account exist or not
 		var destAccount = firestore.collection('account').doc(accountNumber);
 		var destAccountGet = await destAccount.get();

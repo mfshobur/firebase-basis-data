@@ -162,7 +162,7 @@ li {
 	display: block;
 }
 
-#sidebar .btn-sign-out {
+#sidebar .btn-log-out {
 	font-size: 14px;
 	display: flex;
 	justify-content: center;
@@ -175,7 +175,7 @@ li {
 	font-weight: 600;
 	margin-bottom: 12px;
 }
-#sidebar .btn-sign-out:hover {
+#sidebar .btn-log-out:hover {
 	background: var(--dark-blue);
 }
 #sidebar .ads .wrapper p {
@@ -223,32 +223,6 @@ nav form {
 	max-width: 400px;
 	width: 100%;
 	margin-right: auto;
-}
-
-/*search*/
-nav .form-group {
-	position: relative;
-}
-nav .form-group input {
-	width: 100%;
-	background: var(--grey);
-	border-radius: 5px;
-	border: none;
-	outline: none;
-	padding: 10px 36px 10px 16px;
-	transition: all .3s ease;
-}
-nav .form-group input:focus {
-	box-shadow: 0 0 0 1px var(--blue), 0 0 0 4px var(--light-blue);
-}
-
-/*search icon*/
-nav .form-group .icon {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	right: 16px;
-	color: var(--dark-grey);
 }
 
 nav .nav-link {
@@ -399,11 +373,6 @@ main .card .label {
 
 /* MAIN */
 /* CONTENT */
-
-
-
-
-
 
 @media screen and (max-width: 768px) {
 	#content {

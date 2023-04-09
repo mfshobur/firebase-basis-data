@@ -20,9 +20,10 @@ const accNum = atob(urlParams.get('accNum'));
 
 const name_display = document.getElementById('name-display');
 const balance_display = document.getElementById('balance-display');
+
 // change text value
-name_display.innerHTML = username;
-balance_display.innerHTML = "IDR "+currentBalance;
+name_display.innerHTML = "Hi! "+username;
+balance_display.innerHTML = formatRupiah(currentBalance);
 var account = firestore.collection('account').doc(accNum);
 
 // withdraw
@@ -39,9 +40,9 @@ document.getElementById('withdraw-form').addEventListener("submit", async (e) =>
 			});
 		}).then(() => {
 			currentBalance = currentBalanceInt - amountInt;
-			balance_display.innerHTML = 'IDR ' + (currentBalanceInt - amountInt);
+			balance_display.innerHTML = formatRupiah((currentBalanceInt - amountInt));
 			amount = '';
-			alert('Tarik tunai berhasil\nSisa saldo: ' + (currentBalanceInt - amountInt));
+			alert('Tarik tunai berhasil\nSisa saldo: ' + formatRupiah((currentBalanceInt - amountInt)));
 		}).catch((error) => {
 			alert('Terjadi error. Tarik tunai gagal.\n'+error);
 		});
@@ -83,9 +84,9 @@ document.getElementById('transfer-form').addEventListener("submit", async (e) =>
 				});
 				console.log('mengurangi di akun pengirim berhasil');
 			}).then(() => {
-				balance_display.innerHTML = 'IDR ' + (currentBalanceInt - amountInt);
+				balance_display.innerHTML = formatRupiah((currentBalanceInt - amountInt));
 				currentBalance = currentBalanceInt - amountInt;
-				alert(`Transfer berhasil\nPenerima: ${destAccountGet.data()['name']}\nJumlah: ${amountInt}`);
+				alert(`Transfer berhasil\nPenerima: ${destAccountGet.data()['name']}\nJumlah: ${formatRupiah(amountInt)}`);
 				amount = '';
 				accountNumber = '';
 			}).catch((error) => {
@@ -110,14 +111,15 @@ document.getElementById('deposit-form').addEventListener("submit", async (e) => 
 			'balance': currentBalanceInt + amountInt,
 		});
 	}).then(() => {
-		balance_display.innerHTML = 'IDR ' + (currentBalanceInt + amountInt);
+		balance_display.innerHTML = formatRupiah((currentBalanceInt + amountInt));
 		currentBalance = currentBalanceInt + amountInt;
 		amount = '';
-		alert('Setor tunai berhasil\nJumlah saldo: ' + (currentBalanceInt + amountInt));
+		alert('Setor tunai berhasil\nJumlah saldo: ' + formatRupiah((currentBalanceInt + amountInt)));
 	}).catch((error) => {
 		alert('Terjadi error. Setor tunai gagal');
 	});
 });
+
 
 // SIDEBAR DROPDOWN
 const allDropdown = document.querySelectorAll('#sidebar .side-dropdown');
@@ -250,3 +252,11 @@ window.addEventListener('click', function (e) {
 		}
 	})
 })
+
+// formatting rupiah function
+function formatRupiah(currentBalance){
+	var reverse = currentBalance.toString().split('').reverse().join(''),
+        ribuan  = reverse.match(/\d{1,3}/g);
+        ribuan  = ribuan.join('.').split('').reverse().join('');
+	return "IDR " + ribuan;
+}

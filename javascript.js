@@ -24,13 +24,11 @@ const balance_display = document.getElementById('balance-display');
 name_display.innerHTML = username;
 balance_display.innerHTML = "IDR "+currentBalance;
 var account = firestore.collection('account').doc(accNum);
-// var accountGet = await account.get();
 
 // withdraw
 document.getElementById('withdraw-form').addEventListener("submit", async (e) => {
 	e.preventDefault();
 	var amount = document.getElementById('withdraw-amount-input').value;
-	// var account = document.getElementById('withdraw-account-input').value
 	var amountInt = Number(amount);
 	var  currentBalanceInt = Number(currentBalance);
 	// check if current balance is enough to withdraw
@@ -105,7 +103,6 @@ document.getElementById('transfer-form').addEventListener("submit", async (e) =>
 document.getElementById('deposit-form').addEventListener("submit", async (e) => {
 	e.preventDefault();
 	var amount = document.getElementById('deposit-amount-input').value
-	// var account = document.getElementById('withdraw-account-input').value
 	var amountInt = Number(amount);
 	var currentBalanceInt = Number(currentBalance);
 	await firestore.runTransaction(async(transaction) => {
@@ -116,7 +113,7 @@ document.getElementById('deposit-form').addEventListener("submit", async (e) => 
 		balance_display.innerHTML = 'IDR ' + (currentBalanceInt + amountInt);
 		currentBalance = currentBalanceInt + amountInt;
 		amount = '';
-		alert('Setor tunai berhasil\n Jumlah saldo: ' + (currentBalanceInt + amountInt));
+		alert('Setor tunai berhasil\nJumlah saldo: ' + (currentBalanceInt + amountInt));
 	}).catch((error) => {
 		alert('Terjadi error. Setor tunai gagal');
 	});

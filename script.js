@@ -29,19 +29,16 @@ go_to_sign_in_btn.addEventListener("click", () => {
 });
 
 // sign in
-
 document.getElementById('sign-in-form').addEventListener("submit", async (e) => {
   e.preventDefault();
   const sign_in_username = document.getElementById('sign-in-username').value;
   const sign_in_password = document.getElementById('sign-in-password').value;
   var userData = firestore.collection('user').doc(sign_in_username);
   var userDataGet = await userData.get();
-  // alert(accountGet.data()['password']);
   var loginSuccess = !userDataGet.exists ? false : sign_in_password != userDataGet.data()['password'] ? false : true
   if (!loginSuccess) {
     alert('Akun tidak ditemukan atau nama dan/atau password salah')
   } else {
-    // var accountGet = await account.get();
     var account = firestore.collection('account').doc(userDataGet.data()['accNumber']);
     var accountGet = await account.get();
     var name = accountGet.data()['name'];
@@ -49,10 +46,6 @@ document.getElementById('sign-in-form').addEventListener("submit", async (e) => 
     var currentBalance = accountGet.data()['balance'];
     
     window.location.href = "atm.html?name="+btoa(name)+"&currentBalance="+btoa(currentBalance)+"&accNum="+btoa(accNum);
-    // const name_display = document.getElementById('name-display');
-    // name_display.innerText = name;
-    // const balance_display = document.getElementById('balance-display');
-    // balance_display.innerText = currentBalance;
   }
 });
 
@@ -83,7 +76,6 @@ document.getElementById('sign-up-form').addEventListener("submit", async (e) => 
       'password': password,
       'accNumber': accNumber,
     });
-
     
     alert(`Akun berhasil dibuat. Silakan sign in dengan akun yang telah dibuat\nNama: ${username}\nNomor Rekening: ${accNumber}`);
     username = '';
